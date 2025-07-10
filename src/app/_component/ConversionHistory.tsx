@@ -13,6 +13,7 @@ interface ConversionHistory {
 }
 
 export function ConversionHistory({ history }: { history: ConversionHistory[] }) {
+  
   if (history.length === 0) return null;
 
   return (

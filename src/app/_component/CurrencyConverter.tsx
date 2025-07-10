@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
-interface ConversionHistory {
+export interface ConversionHistory {
   fromCurrency: string;
   toCurrency: string;
   amount: number;
@@ -37,18 +37,6 @@ export function CurrencyConverter() {
   const [history, setHistory] = useState<ConversionHistory[]>([]);
 
   useEffect(() => {
-    // Initialize localforage
-    localforage.config({
-      name: "currencyConverter",
-      storeName: "conversionHistory",
-    });
-
-    // Load history from local storage
-    localforage.getItem<ConversionHistory[]>("history").then((savedHistory) => {
-      if (savedHistory) {
-        setHistory(savedHistory);
-      }
-    });
 
     // Fetch currencies and exchange rates
     const fetchData = async () => {
@@ -74,20 +62,6 @@ export function CurrencyConverter() {
         console.error("API Error:", err);
         setError("Failed to fetch exchange rates. Please try again later.");
         setIsLoading(false);
-
-        // Fallback to some basic currencies if API fails
-        // setCurrencies({
-        //   USD: 'United States Dollar',
-        //   EUR: 'Euro',
-        //   GBP: 'British Pound Sterling',
-        //   JPY: 'Japanese Yen'
-        // });
-        // setExchangeRates({
-        //   USD: 1,
-        //   EUR: 0.93,
-        //   GBP: 0.79,
-        //   JPY: 151.42
-        // });
       }
     };
 
